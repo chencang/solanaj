@@ -642,16 +642,16 @@ public class RpcApi {
         return client.call("getMaxRetransmitSlot", new ArrayList<>(), Long.class);
     }
 
-    public SimulatedTransaction simulateTransaction(String transaction, List<PublicKey> addresses) throws RpcException {
-        SimulateTransactionConfig simulateTransactionConfig = new SimulateTransactionConfig(Encoding.base64);
-        simulateTransactionConfig.setAccounts(
-                Map.of(
-                        "encoding",
-                        Encoding.base64,
-                        "addresses",
-                        addresses.stream().map(PublicKey::toBase58).collect(Collectors.toList()))
-        );
-        simulateTransactionConfig.setReplaceRecentBlockhash(true);
+
+
+    /**
+     * Simulates a transaction with optional configuration.
+     *
+     * @param transaction Base64 encoded transaction string
+     * @return SimulatedTransaction result
+     * @throws RpcException if the RPC call fails
+     */
+    public SimulatedTransaction simulateTransaction(String transaction,SimulateTransactionConfig simulateTransactionConfig) throws RpcException {
 
         List<Object> params = new ArrayList<>();
         params.add(transaction);

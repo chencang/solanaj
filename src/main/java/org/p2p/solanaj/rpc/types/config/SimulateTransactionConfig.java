@@ -24,7 +24,6 @@ public class SimulateTransactionConfig {
 
     @JsonProperty("replaceRecentBlockhash")
     private Boolean replaceRecentBlockhash = false;
-
     public SimulateTransactionConfig(Map accounts) {
         this.accounts = accounts;
     }
@@ -32,4 +31,27 @@ public class SimulateTransactionConfig {
     public SimulateTransactionConfig(Encoding encoding) {
         this.encoding = encoding;
     }
+
+
+    public SimulateTransactionConfig(Encoding encoding,Boolean replaceRecentBlockhash) {
+        this.replaceRecentBlockhash = replaceRecentBlockhash;
+        this.encoding = encoding;
+    }
+
+    public static SimulateTransactionConfig defaultSimulateConfig() {
+        // replaceRecentBlockhash: When true, RPC replaces the transaction's blockhash with the current valid one
+        // This is necessary because:
+        // - Solana blockhashes expire after ~60 seconds (~150 slots)
+        // - Signed transactions from frontend may have expired blockhashes
+        // - We want to simulate the transaction logic, not test blockhash validity
+        // - With blockhash replacement, we can simulate old transactions without re-signing
+        // sigVerify=false: Skip signature verification
+        // Required because:
+        // - If replaceRecentBlockhash=true, the blockhash changes, so the signature won't match
+        // - Signature is based on original blockhash, but we're simulating with a new one
+        // - For simulation, we care about execution logic, not signature validity
+        return new SimulateTransactionConfig(Encoding.base58, true);
+
+    }
+
 }

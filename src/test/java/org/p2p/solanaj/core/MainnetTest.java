@@ -658,14 +658,6 @@ public class MainnetTest extends AccountBasedTest {
         assertEquals(0, stakeActivation.getInactive());
     }
 
-    @Disabled
-    @Test
-    public void simulateTransactionTest() throws RpcException {
-        String transaction = "ASdDdWBaKXVRA+6flVFiZokic9gK0+r1JWgwGg/GJAkLSreYrGF4rbTCXNJvyut6K6hupJtm72GztLbWNmRF1Q4BAAEDBhrZ0FOHFUhTft4+JhhJo9+3/QL6vHWyI8jkatuFPQzrerzQ2HXrwm2hsYGjM5s+8qMWlbt6vbxngnO8rc3lqgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAy+KIwZmU8DLmYglP3bPzrlpDaKkGu6VIJJwTOYQmRfUBAgIAAQwCAAAAuAsAAAAAAAA=";
-        List<PublicKey> addresses = List.of(PublicKey.valueOf("QqCCvshxtqMAL2CVALqiJB7uEeE5mjSPsseQdDzsRUo"));
-        SimulatedTransaction simulatedTransaction = client.getApi().simulateTransaction(transaction, addresses);
-        assertTrue(simulatedTransaction.getValue().getLogs().size() > 0);
-    }
 
     @Test
     @Disabled
